@@ -1,5 +1,7 @@
 package com.gagan.networkswitcher;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 import android.widget.Toast;
@@ -18,7 +20,7 @@ public class NetworkTileService extends TileService {
     }
 
     private void updateTile(boolean fiveG, boolean ok) {
-        runOnUiThread(() -> {
+        new Handler(Looper.getMainLooper()).post(() -> {
             Tile tile = getQsTile(); if (tile == null) return;
             tile.setLabel(ok ? (fiveG ? "5G" : "4G") : "Network error");
             tile.setState(ok ? Tile.STATE_ACTIVE : Tile.STATE_UNAVAILABLE);
